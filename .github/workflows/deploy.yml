@@ -1,0 +1,33 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main # Trigger on push to the main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' # Specify your Node.js version
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build # Change this command based on your build process
+
+      - name: Deploy to <your-hosting-service>
+        env:
+          YOUR_ENV_VAR: ${{ secrets.YOUR_ENV_VAR }} # If you have any environment variables
+        run: |
+          # Deploy command, replace this with your deployment command
+          # For example, using Netlify CLI:
+          npx netlify-cli deploy --prod --site YOUR_NETLIFY_SITE_ID --auth YOUR_NETLIFY_AUTH_TOKEN
